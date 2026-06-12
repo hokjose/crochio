@@ -1,0 +1,152 @@
+---
+import LayoutTienda from "../../layouts/LayoutTienda.astro";
+import { productos } from "../../data/productos.js";
+
+export function getStaticPaths() {
+  return productos.map((prod) => ({
+    params: { id: prod.id },
+    props: { producto: prod },
+  }));
+}
+
+const { producto } = Astro.props;
+
+// Configuración del botón de WhatsApp personalizado
+const numeroCelular = "51927927209"; // Formato internacional sin el signo +
+const mensajeBase = `¡Hola! Me encantaron tus tejidos en crochio.aqp 😍. Deseo consultar más detalles sobre el producto: "${producto.nombre}" (Precio: ${producto.precio}). ¿Está disponible? ✨`;
+
+// Codificamos el texto para que sea una URL válida
+const whatsappUrl = `https://wa.me/${numeroCelular}?text=${encodeURIComponent(mensajeBase)}`;
+---
+
+<LayoutTienda title={`${producto.nombre} | Detalles`} themeColor="#ff6b6b">
+  <div class="contenedor-detalle">
+    <div class="imagen-lado">
+      <img src={producto.imagen} alt={producto.nombre} class="detalle-img" />
+    </div>
+
+    <div class="info-lado">
+      <span class="categoria-tag">{producto.categoria}</span>
+      <h2>{producto.nombre}</h2>
+      <p class="precio-grande">{producto.precio}</p>
+
+      <div class="caracteristicas">
+        <h4>Características del producto:</h4>
+        <p>{producto.descripcion}</p>
+        <ul>
+          <li>🧵 Hecho 100% a mano de forma artesanal en Arequipa.</li>
+          <li>✨ Material suave y de alta durabilidad.</li>
+          <li>💖 Diseñado con mucho amor.</li>
+        </ul>
+      </div>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-consultar"
+      >
+        💬 Consultar por WhatsApp
+      </a>
+
+      <div class="volver-caja">
+        <a href="/catalogo" class="btn-volver">← Volver al Catálogo</a>
+      </div>
+    </div>
+  </div>
+</LayoutTienda>
+
+<style>
+  .contenedor-detalle {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    margin-top: 1rem;
+  }
+  .detalle-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  .categoria-tag {
+    background-color: #f1f1f1;
+    color: #666;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .info-lado h2 {
+    font-size: 2rem;
+    margin: 0.8rem 0;
+    color: #222;
+  }
+  .precio-grande {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--theme-color);
+    margin-bottom: 1.5rem;
+  }
+  .caracteristicas {
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .caracteristicas h4 {
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  .caracteristicas p {
+    color: #666;
+    line-height: 1.6;
+  }
+  .caracteristicas ul {
+    padding-left: 1.2rem;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  /* ESTILOS DEL BOTÓN CONSULTAR */
+  .btn-consultar {
+    display: block;
+    text-align: center;
+    background-color: #25d366; /* Verde oficial de WhatsApp */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+    transition:
+      transform 0.2s,
+      background-color 0.2s;
+  }
+  .btn-consultar:hover {
+    background-color: #20ba56;
+    transform: translateY(-2px);
+  }
+
+  .volver-caja {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  .btn-volver {
+    display: inline-block;
+    color: #666;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  .btn-volver:hover {
+    color: #111;
+    text-decoration: underline;
+  }
+</style>

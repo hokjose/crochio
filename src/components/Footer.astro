@@ -1,0 +1,124 @@
+---
+// Configuración del enlace de WhatsApp general para el Footer
+const numeroCelular = "51927927209";
+const mensajeGeneral =
+  "¡Hola! Visité la página de crochio.aqp 😍 y me encantaron tus tejidos hechos a mano. ¡Quiero hacerte una consulta! ✨";
+
+// Codificamos el texto para la URL
+const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURIComponent(mensajeGeneral)}`;
+---
+
+<footer class="footer">
+  <div class="footer-contenido">
+    <div class="footer-info">
+      <h3>🌸 crochio.aqp 🌸</h3>
+      <p>📍 AREQUIPA - PERÚ 🇵🇪</p>
+      <p>📦 Envíos a nivel nacional 💕🙌🏻</p>
+      <p>🧵 Hecho a mano con amor</p>
+    </div>
+
+    <div class="footer-redes">
+      <h4>Contacto y Redes</h4>
+      <p>
+        📸 Instagram: <a
+          href="https://instagram.com/crochio.aqp"
+          target="_blank"
+          rel="noopener noreferrer">@crochio.aqp</a
+        >
+      </p>
+
+      <a
+        href={whatsappFooterUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-consultar-footer"
+      >
+        💬 Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-derechos">
+    <p>
+      &copy; {new Date().getFullYear()} crochio.aqp. Todos los derechos reservados.
+      Hecho con ❤️.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: #222;
+    color: #eee;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    margin-top: 4rem;
+    font-size: 0.95rem;
+  }
+  .footer-contenido {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    border-bottom: 1px solid #444;
+    padding-bottom: 2rem;
+  }
+  .footer-info h3,
+  .footer-redes h4 {
+    color: var(--theme-color, #ff6b6b);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .footer-info p,
+  .footer-redes p {
+    margin: 0.5rem 0;
+  }
+  .footer-redes a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .footer-redes a:hover {
+    color: var(--theme-color, #ff6b6b);
+  }
+
+  /* ESTILOS PRECIOSOS PARA EL BOTÓN DEL FOOTER */
+  .btn-consultar-footer {
+    display: inline-block;
+    background-color: #25d366; /* Verde WhatsApp */
+    color: white !important; /* Forzamos a que sea blanco */
+    text-decoration: none !important;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+    transition:
+      transform 0.2s,
+      background-color 0.2s;
+  }
+  .btn-consultar-footer:hover {
+    background-color: #20ba56;
+    transform: translateY(-2px);
+  }
+
+  .footer-derechos {
+    text-align: center;
+    padding-top: 1.5rem;
+    color: #aaa;
+    font-size: 0.85rem;
+  }
+
+  /* MAGIA PARA CELULARES */
+  @media (max-width: 768px) {
+    .footer-contenido {
+      grid-template-columns: 1fr; /* Todo en una sola columna */
+      text-align: center; /* Centramos las letras */
+      gap: 2.5rem;
+    }
+    .btn-consultar-footer {
+      display: block; /* Hacemos que el botón ocupe el ancho adecuado */
+      margin: 1rem auto 0 auto;
+    }
+  }
+</style>
