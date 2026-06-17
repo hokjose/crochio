@@ -35,7 +35,27 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
       >
         💬 Consultar por WhatsApp
       </a>
-      <a href="https://www.tiktok.com/@crochio.aqp">tik tok</a>
+
+      <a
+        href="https://www.tiktok.com/@crochio.aqp"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="tiktok-btn"
+      >
+        <svg
+          class="tiktok-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+          width="18"
+          height="18"
+          fill="currentColor"
+        >
+          <path
+            d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A145.55,145.55,0,1,1,184,203.8h0a144.1,144.1,0,0,1,41.25,6v65.41a80.14,80.14,0,1,0,39.14,68.17l.12-243.12H327.3a144.38,144.38,0,0,0,120.7,110.45Z"
+          ></path>
+        </svg>
+        Seguir en TikTok
+      </a>
     </div>
   </div>
 
@@ -121,5 +141,50 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
       display: block; /* Hacemos que el botón ocupe el ancho adecuado */
       margin: 1rem auto 0 auto;
     }
+  }
+  /* Estilo base del botón  de TIK TOK*/
+  .tiktok-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #010101;
+    color: #ffffff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow:
+      -3px 3px 0px #00f2fe,
+      3px -3px 0px #fe0979;
+  }
+
+  /* Efecto al pasar el mouse (Hover) */
+  .tiktok-btn:hover {
+    transform: scale(1.05);
+    box-shadow:
+      -5px 5px 0px #00f2fe,
+      5px -5px 0px #fe0979;
+    background-color: #111111;
+  }
+
+  /* Efecto al hacer clic */
+  .tiktok-btn:active {
+    transform: scale(0.98);
+    box-shadow:
+      -1px 1px 0px #00f2fe,
+      1px -1px 0px #fe0979;
+  }
+
+  /* Animación sutil para el icono */
+  .tiktok-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .tiktok-btn:hover .tiktok-icon {
+    transform: rotate(-10deg);
   }
 </style>
