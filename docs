@@ -1,0 +1,114 @@
+comandos para poder hacer ejecutar este proyecto en esta pc xd
+hasta aquí tienes que tener instalado el node según el astro que te pide que version
+npm.cmd install
+npm.cmd run dev
+
+
+
+requerimiento de CROCHIO
+1. Datos de la empresa
+Nombre de la empresa: CROCHIO
+Rubro: tejidos artesanales  a crochet
+Número de trabajadores: todo ella_xd
+Problema actual: ósea no hay como tal, pero el detalle seria para poder gestionar los producto s por categorías en un sitio web le va ha ayudar para nuevos clientes y una mejor experiencia para los clientes fijos.
+
+2. Objetivo del sistema
+
+desarrollar un sistema tanto para la administración como también para web publico
+
+-panel administrativo: desarrollar un sistema de panel administrativo que permita registrar pedidos, controlar inventario, registrar clientes fijos, subir productos para la web publica y controlar el stock de unidades vendidas.
+-sitio web publico: desarrollar un sistema web publico el cual interactuara directamente con sus clientes y usuarios nuevos, el sitio web publico mostrara un panorama amplio de catalogos separados por categorías, 
+3. Entrevista al dueño o encargado
+
+Haz preguntas como:
+
+Sobre ventas
+¿Cómo registran las ventas actualmente?
+¿Emiten boletas o facturas?
+¿Qué información desean ver en los reportes?
+Sobre inventario
+¿Cómo controlan el stock?
+¿Con qué frecuencia realizan inventarios?
+¿Qué sucede cuando un producto se agota?
+Sobre usuarios
+¿Quiénes usarán el sistema?
+¿Necesitan diferentes permisos?
+Sobre reportes
+¿Qué reportes necesitan?
+¿Diarios, semanales o mensuales?
+4. Requerimientos funcionales
+
+Aquí describes lo que hará el sistema.
+
+RF01
+
+El sistema permitirá registrar usuarios.
+
+RF02
+
+El sistema permitirá registrar productos.
+
+RF03
+
+El sistema permitirá registrar ventas.
+
+RF04
+
+El sistema actualizará automáticamente el stock.
+
+RF05
+
+El sistema generará reportes de ventas.
+
+RF06
+
+El sistema permitirá buscar productos por nombre o código.
+
+5. Requerimientos no funcionales
+
+RNF01
+
+El sistema será accesible desde navegador web.
+
+RNF02
+
+La información estará protegida mediante autenticación.
+
+RNF03
+
+El tiempo de respuesta será menor a 3 segundos.
+
+RNF04
+
+El sistema será compatible con computadoras y celulares.
+
+6. Casos de uso principales
+Actor	Caso de uso
+Administrador	Gestionar usuarios
+Administrador	Gestionar productos
+Vendedor	Registrar venta
+Administrador	Consultar reportes
+Vendedor	Consultar stock
+7. Modelo básico para proyecto académico
+
+Si necesitas algo para universidad o instituto, una MYPE típica puede tener:
+
+Sistema de Gestión de Ventas e Inventario para una Bodega
+
+Módulos:
+
+Login
+Usuarios
+Productos
+Categorías
+Inventario
+Ventas
+Reportes
+
+Tecnologías:
+
+Frontend: Astro + React
+Backend: Node.js + Express
+Base de datos: PostgreSQL o MySQL
+
+Ese proyecto es suficientemente real para una MYPE y te permite aplicar análisis, diseño de base de datos, API REST, autenticación y reportes.
