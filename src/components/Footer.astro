@@ -6,6 +6,9 @@ const mensajeGeneral =
 
 // Codificamos el texto para la URL
 const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURIComponent(mensajeGeneral)}`;
+
+const { storeName, contacts, accent_color } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
@@ -119,7 +122,7 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
       background-color 0.2s;
   }
   .btn-consultar-footer:hover {
-    background-color: #20ba56;
+    background-color: green;
     transform: translateY(-2px);
   }
 

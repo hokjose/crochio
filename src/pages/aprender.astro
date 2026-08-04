@@ -1,0 +1,142 @@
+---
+import "/src/styles/global.css";
+
+import MainLayout from "/src/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Aprende a Tejer | Crochio" themeColor="#ff6b6b">
+  <div class="bg-gray-50 min-h-screen text-gray-800">
+    {/* Cabecera de la sección */}
+    <header class="bg-white border-b border-gray-100 py-8 shadow-sm">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <span
+          class="text-xs font-semibold text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100"
+        >
+          Academia Crochio
+        </span>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mt-2 mb-2">
+          Aprende a Tejer Crochet Desde Cero
+        </h1>
+        <p class="text-sm text-gray-500 max-w-lg mx-auto">
+          Descubre los puntos básicos, las herramientas que necesitas y da tus
+          primeros pasos en el mundo del tejido artesanal.
+        </p>
+      </div>
+      <div
+        class="min-h-screen bg-slate-900 flex items-center justify-center p-4 md:p-8"
+      >
+        <div class="relative group">
+          <div
+            class="relative p-3 bg-slate-800/80 backdrop-blur-md border-4 border-amber-600/60 rounded-2xl shadow-2xl transition-all duration-300 hover:border-amber-500"
+          >
+            <img
+              src="/imagenes/aprender_crochio.jpg"
+              alt="Artesanía Crochio"
+              class="block max-w-full h-auto max-h-[85vh] rounded-xl object-contain shadow-md"
+            />
+
+            <span
+              class="absolute bottom-6 right-6 bg-slate-900/90 text-amber-400 text-xs px-3 py-1.5 rounded-lg font-medium shadow-lg border border-amber-500/30 backdrop-blur-sm"
+            >
+              Sistema Crochio ✨
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* Contenido de Guías */}
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-10">
+      {/* Módulo 1: Materiales */}
+      <div
+        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100"
+      >
+        <h2
+          class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2"
+        >
+          <span
+            class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-sm font-bold"
+            >1</span
+          >
+          Materiales Básicos
+        </h2>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          Para empezar no necesitas mucho. Los elementos esenciales son:
+        </p>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+          <li>
+            <strong>Crochet (o aguja):</strong> Elige un tamaño adecuado para tu hilo
+            (los números 3mm a 4mm son ideales para empezar).
+          </li>
+          <li>
+            <strong>Hilo o lana:</strong> Se recomienda lana de grosor medio y de
+            colores claros para ver bien las cadenas.
+          </li>
+          <li>
+            <strong>Tijeras y aguja lanera:</strong> Para cortar y rematar los hilos
+            al finalizar.
+          </li>
+        </ul>
+      </div>
+
+      {/* Módulo 2: El Nudo Corredizo y la Cadenita */}
+      <div
+        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100"
+      >
+        <h2
+          class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2"
+        >
+          <span
+            class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-sm font-bold"
+            >2</span
+          >
+          El Nudo Corredizo y la Cadenita (Punto Base)
+        </h2>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          Todo proyecto a crochet comienza con una cadena de inicio. Mantén una
+          tensión constante en el hilo para que todas las "v" queden del mismo
+          tamaño.
+        </p>
+        <div
+          class="bg-rose-50 border border-rose-100 rounded-xl p-4 text-xs text-rose-800 font-medium"
+        >
+          💡 <strong>Consejo de Crochio:</strong> No aprietes demasiado los puntos
+          en tu aguja; si están muy ajustados, te costará pasar la aguja en la siguiente
+          vuelta.
+        </div>
+      </div>
+
+      {/* Módulo 3: Puntos Principales */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <h3 class="font-bold text-gray-800 text-base mb-2">
+            Punto Bajo (Medio Punto)
+          </h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Es el punto más firme y compacto, perfecto para amigurumis y
+            carteras resistentes.
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <h3 class="font-bold text-gray-800 text-base mb-2">
+            Punto Alto (Vareta)
+          </h3>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Un punto más alto y flexible, ideal para prendas de vestir, mantas y
+            bufandas ligeras.
+          </p>
+        </div>
+      </div>
+
+      {/* Botón de retorno al catálogo */}
+      <div class="text-center pt-6">
+        <a
+          href="/catalogo"
+          class="inline-block bg-rose-600 hover:bg-rose-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-md transition"
+        >
+          Ver productos e inspiración en el catálogo
+        </a>
+      </div>
+    </main>
+  </div>
+</MainLayout>

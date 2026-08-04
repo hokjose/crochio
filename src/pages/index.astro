@@ -1,53 +1,18 @@
 ---
-import LayoutTienda from "../layouts/LayoutTienda.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import { supabase } from "../lib/supabase";
+
+// 1. Consultamos directamente la tabla de categorías de tu base de datos
+const { data: categorias, error } = await supabase
+  .from("categorias")
+  .select("*");
+
+if (error) {
+  console.error("Error al cargar categorías:", error.message);
+}
 ---
 
-<LayoutTienda title="Inicio | Tejidos Mágicos" themeColor="#ff6b6b">
-  <h2>¡Bienvenida a nuestra tienda!</h2>
-
-  <div class="video-container">
-    <iframe
-      src="https://www.tiktok.com/embed/v2/7649494557301738770"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    >
-    </iframe>
-  </div>
-
-  <p>
-    Descubre las artesanías más bonitas hechas a mano con dedicación y cariño.
-    Navega por nuestro menú para ver todos los productos disponibles. por si
-    acaso esta desarrollado por jose luis_xd el futuro inge aqui se puede poner
-    fotos, o mas cosas como(promociones, productos en stcok, pedidos)
-  </p>
-  <a href="/catalogo" class="btn">Ver Catálogo Completo</a>
-</LayoutTienda>
-
-<style>
-  .btn {
-    display: inline-block;
-    background-color: var(--theme-color);
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 1rem;
-  }
-
-  .video-container {
-    position: relative;
-    width: 100%;
-    max-width: 325px; /* Ancho ideal de smartphone */
-    height: 580px; /* Proporción alargada estándar */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    background-color: #000000;
-  }
-
-  .video-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-</style>
+<MainLayout>
+  <Navbar categories={categorias || []} />
+</MainLayout>

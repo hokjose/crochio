@@ -1,17 +1,49 @@
 ---
-
+// Aquí puedes dejar tus importaciones o lógica si la necesitas más adelante
 ---
 
-<header class="header">
-  <h1>🌸 Tejidos Mágicos 🌸</h1>
-  <p>Artesanías hechas con el corazón</p>
-</header>
+<header
+  class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm"
+>
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    {/* Logo y Nombre en el Header */}
+    <a href="/" class="flex items-center gap-3 group">
+      <div
+        class="w-10 h-10 rounded-full overflow-hidden border-2 border-rose-500 shadow-md bg-white flex items-center justify-center"
+      >
+        <img
+          src="/imagenes/logo_crochio.jpg"
+          alt="Crochio Logo"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <span class="font-extrabold text-xl text-gray-800 tracking-tight">
+        Sistema Crochio
+      </span>
+    </a>
 
-<style>
-  .header {
-    background-color: var(--theme-color);
-    color: white;
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-</style>
+    {/* Botones de Navegación (Inicio y Contactar) */}
+    <nav class="flex items-center gap-3 md:gap-6">
+      <a
+        href="/"
+        class="text-sm font-medium text-gray-600 hover:text-rose-600 transition"
+      >
+        Inicio
+      </a>
+
+      <a
+        href="#contacto"
+        class="text-sm font-medium text-gray-600 hover:text-rose-600 transition"
+      >
+        Contactar
+      </a>
+
+      <a
+        href="/catalogo"
+        class="bg-rose-600 hover:bg-rose-700 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow-md shadow-rose-200 transition"
+      >
+        Ver Catálogo
+      </a>
+    </nav>
+  </div>
+</header>

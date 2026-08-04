@@ -1,98 +1,102 @@
 ---
+const { store, categories = [], contacts = [] } = Astro.props;
+// 1. Importamos Supabase para traer las categorías dinámicas
+import { supabase } from "../lib/supabase";
+import "/src/styles/global.css";
 
+// 2. Consultamos la tabla categorías que ya usas en tu sistema
+const { data: categorias } = await supabase.from("categorias").select("*");
 ---
 
-<nav class="navbar">
-  <div class="navbar-contenedor">
-    <a href="/" class="navbar-logo-link">
-      <img
-        src="/imagenes/logo.png"
-        alt="Logo crochio.aqp"
-        class="navbar-logo"
-      />
-      <span class="navbar-marca">crochio.aqp</span>
-    </a>
-
-    <ul class="nav-links">
-      <li><a href="/">Inicio</a></li>
-      <li><a href="/catalogo">Catálogo</a></li>
-    </ul>
+<section
+  class="w-full min-h-screen py-16 px-4 flex flex-col items-center justify-center text-center bg-cover bg-center bg-fixed relative"
+  style="background-image: linear-gradient(to bottom, rgba(80, 137, 141, 0.85) 0%, rgba(0, 0, 0, 0.4) 100%), url('/imagen/fondo-nav.png');"
+>
+  {/* Logo o imagen principal de la marca */}
+  <div
+    class="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-5 mx-auto bg-white flex items-center justify-center"
+  >
+    <img
+      src="/imagenes/logo_crochio.jpg"
+      alt="Crochio Logo"
+      class="w-full h-full object-cover"
+    />
   </div>
-</nav>
 
-<style>
-  .navbar {
-    background-color: #ffffff; /* Cambiado a blanco para que resalte el logo y los tejidos */
-    border-bottom: 1px solid #f0f0f0;
-    padding: 0.8rem 1.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-  }
+  {/* Título y Subtítulo de bienvenida */}
+  <h1
+    class="text-4xl md:text-6xl font-extrabold text-white mb-3 drop-shadow-md"
+  >
+    Sistema Crochio
+  </h1>
 
-  .navbar-contenedor {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  <p
+    class="max-w-2xl mx-auto text-white/90 text-sm md:text-base leading-relaxed mb-8 drop-shadow"
+  >
+    Panel de gestión y catálogo oficial para la administración de tus productos
+    artesanales.
+  </p>
 
-  /* Estilos del grupo del Logo */
-  .navbar-logo-link {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    text-decoration: none;
-  }
+  {/* Botones de acción principales */}
+  <div class="flex justify-center gap-4 flex-wrap mb-14">
+    <a
+      href="catalogo"
+      class="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-bold py-3.5 px-7 rounded-2xl border border-white/30 transition-all transform hover:-translate-y-1"
+    >
+      Ver categorías
+    </a>
+    <div class="mt-8 text-center">
+      <a
+        href="/aprender"
+        class="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-rose-700 font-bold px-6 py-3.5 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 text-sm md:text-base border border-rose-100"
+      >
+        🧶 ¿Deseas aprender a tejer desde cero?
+      </a>
+    </div>
+  </div>
 
-  /* AQUÍ HACEMOS LA IMAGEN CIRCULAR */
-  .navbar-logo {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%; /* Esto la vuelve completamente circular */
-    object-fit: cover; /* Evita que la imagen se estire feo si no es cuadrada */
-    border: 2px solid var(--theme-color, #ff6b6b); /* Un pequeño borde del color de la tienda */
-  }
+  {/* Sección de Pregunta */}
+  <div id="categorias" class="scroll-mt-10">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+      ¿Qué estás buscando?
+    </h2>
+    <p class="text-gray-500 mb-8 text-sm md:text-base">
+      Explora nuestras categorías principales
+    </p>
+  </div>
 
-  .navbar-marca {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #333;
-    font-family: "Segoe UI", sans-serif;
-  }
+  {/* Tarjetas de Categorías Dinámicas */}
+  <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto w-full">
+    {
+      categorias?.map((cat) => (
+        <a
+          href={`/catalogo?categoria=${cat.id}`}
+          class="relative w-full sm:w-[300px] h-[200px] rounded-2xl overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 block bg-gray-200 group"
+        >
+          {/* Imagen de fondo de la categoría (si tienes campo de imagen, o un color/respaldo) */}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
 
-  /* Estilos de los Enlaces */
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
+          {/* Si tu tabla categorías tiene una columna de imagen, la muestra; si no, muestra un color o fondo por defecto */}
+          <div class="absolute inset-0 bg-rose-900/40 z-0 flex items-center justify-center text-white font-bold text-xl">
+            {cat.nombre}
+          </div>
 
-  .nav-links a {
-    color: #555;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.2s;
-  }
+          {/* Información dentro de la tarjeta */}
+          <div class="absolute bottom-0 left-0 w-full p-5 z-20 flex justify-between items-end text-left">
+            <div>
+              <h3 class="text-white text-lg font-bold drop-shadow">
+                {cat.nombre}
+              </h3>
+              <p class="text-white/80 text-xs mt-0.5">Explorar sección</p>
+            </div>
 
-  .nav-links a:hover {
-    color: var(--theme-color, #ff6b6b);
-  }
-
-  /* MAGIA PARA CELULARES */
-  @media (max-width: 768px) {
-    .navbar-contenedor {
-      flex-direction: column; /* Pone el menú debajo del logo */
-      gap: 1rem;
+            {/* Círculo con flecha interactiva */}
+            <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white text-sm group-hover:bg-rose-600 transition-colors shadow-md">
+              →
+            </div>
+          </div>
+        </a>
+      ))
     }
-    .navbar-logo {
-      width: 55px; /* Lo hacemos un poquitito más pequeño en celular para que no estorbe */
-      height: 55px;
-    }
-    .nav-links {
-      gap: 1rem; /* Acercamos un poco los botones */
-    }
-  }
-</style>
+  </div>
+</section>
