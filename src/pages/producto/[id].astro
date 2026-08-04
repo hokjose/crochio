@@ -1,5 +1,6 @@
 ---
-import LayoutTienda from "../../layouts/LayoutTienda.astro";
+// ✅ AHORA (Ruta absoluta limpia que Vercel entenderá sin problemas)
+import LayoutTienda from "/src/layouts/LayoutTienda.astro";
 import { productos } from "../../data/productos.js";
 
 export function getStaticPaths() {
