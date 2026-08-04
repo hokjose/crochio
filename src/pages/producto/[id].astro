@@ -1,7 +1,6 @@
 ---
-// ✅ Usemos la ruta relativa correcta con dos niveles hacia arriba
-// ✅ Son tres niveles hacia arriba: [id] -> producto -> pages -> raíz(src) -> layouts
-import LayoutTienda from "../../../layouts/LayoutTienda.astro";
+// ✅ Usando el alias raíz de Astro (@/), que nunca falla sin importar la profundidad
+import LayoutTienda from "@/layouts/LayoutTienda.astro";
 import { productos } from "../../data/productos.js";
 
 export function getStaticPaths() {
