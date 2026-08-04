@@ -1,6 +1,7 @@
 ---
 // ✅ Usemos la ruta relativa correcta con dos niveles hacia arriba
-import LayoutTienda from "../../layouts/LayoutTienda.astro";
+// ✅ Son tres niveles hacia arriba: [id] -> producto -> pages -> raíz(src) -> layouts
+import LayoutTienda from "../../../layouts/LayoutTienda.astro";
 import { productos } from "../../data/productos.js";
 
 export function getStaticPaths() {
