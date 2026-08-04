@@ -2,7 +2,6 @@
   "name": "j-crochio-tienda-virtual-crochio",
   "type": "module",
   "version": "0.0.1",
-  
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -10,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^11.0.4",
     "@supabase/supabase-js": "^2.112.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^6.4.6",
