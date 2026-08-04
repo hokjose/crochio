@@ -1,6 +1,6 @@
 ---
-// ✅ AHORA (Ruta absoluta limpia que Vercel entenderá sin problemas)
-import LayoutTienda from "/src/layouts/LayoutTienda.astro";
+// ✅ Usemos la ruta relativa correcta con dos niveles hacia arriba
+import LayoutTienda from "../../layouts/LayoutTienda.astro";
 import { productos } from "../../data/productos.js";
 
 export function getStaticPaths() {
