@@ -1,101 +1,274 @@
 ---
+// 1. Configuración de renderizado dinámico (SSR)
+export const prerender = false;
+
+// 2. Importaciones de estilos, componentes y Supabase (sin duplicados)
 import "/src/styles/global.css";
 import MainLayout from "../../layouts/MainLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { supabase } from "../../lib/supabase";
 
-// 1. Obtener todas las categorías
-const { data: categorias, error: errorCat } = await supabase
+// 3. Consultar las categorías para los botones de filtros
+const { data: categories, error: errorCategorias } = await supabase
   .from("categorias")
   .select("*");
 
-// 2. Obtener los productos con el nombre de su categoría asociada
-const { data: productos, error: errorProd } = await supabase.from("productos")
-  .select(`
+if (errorCategorias) {
+  console.error("Error al cargar categorías:", errorCategorias.message);
+}
+
+// 4. Consultar los productos junto con el nombre de su categoría asociada
+const { data: productos, error: errorProductos } = await supabase.from(
+  "productos",
+).select(`
     *,
     categorias (nombre)
   `);
+
+if (errorProductos) {
+  console.error("Error al cargar productos:", errorProductos.message);
+}
 ---
 
-<MainLayout title="Catálogo | Crochio Artesanías" themeColor="#ff6b6b">
-  <html lang="es">
-    <body class="bg-gray-50 min-h-screen text-gray-800">
-      <header class="bg-white border-b border-gray-100 py-6 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-          <h1 class="text-3xl font-bold text-rose-600">CROCHIO</h1>
-          <p class="text-sm text-gray-500 mt-1">
-            Catálogo oficial de productos artesanales
-          </p>
-        </div>
-      </header>
+<MainLayout>
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div
+      class="catalogo-header-container bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8"
+    >
+      <div class="header-textos mb-4">
+        <h2 class="text-2xl font-bold text-gray-800">Nuestro Catálogo</h2>
+        <p class="sub-seccion text-gray-500 text-sm">
+          Encuentra el producto perfecto para ti.
+        </p>
+      </div>
 
-      <main class="max-w-6xl mx-auto px-4 py-10">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-gray-800">Nuestros Productos</h2>
-          <span
-            class="text-xs font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-100"
+      <div
+        class="barra-filtros flex flex-col md:flex-row gap-4 items-center justify-between"
+      >
+        <div class="grupo-izq relative w-full md:w-1/2">
+          <div class="buscador relative flex items-center">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 text-gray-400"
+            ></i>
+            <input
+              type="text"
+              id="product-search"
+              placeholder="Buscar productos..."
+              class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-amber-500 transition"
+            />
+
+            <button
+              id="clear-search"
+              type="button"
+              style="display: none;"
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-none border-none text-base text-gray-400 hover:text-gray-600 cursor-pointer font-bold"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div
+            id="no-products-message"
+            style="display: none;"
+            class="absolute top-full left-0 bg-red-50 text-red-600 p-3 rounded-xl border border-dashed border-red-200 mt-2 z-50 w-full font-bold text-sm shadow-sm"
           >
-            {productos?.length || 0} disponibles
-          </span>
+            lo sentimos , aun no tenemos ese producto 🥲
+          </div>
         </div>
 
-        {/* Cuadrícula de productos adaptada con Tailwind */}
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          class="categorias-lista flex flex-wrap gap-2 w-full md:w-auto"
+          id="category-filters"
         >
+          <button
+            class="pill px-4 py-2 bg-amber-600 text-white rounded-xl text-sm font-medium transition active"
+            data-category="todos">Todos</button
+          >
           {
-            productos?.map((prod) => (
-              <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition">
-                {/* Imagen controlada en tamaño (h-48 fija) */}
-                <div class="h-48 w-full bg-gray-100 overflow-hidden">
-                  {prod.imagen ? (
-                    <img
-                      src={prod.imagen}
-                      alt={prod.nombre}
-                      class="w-full h-full object-cover hover:scale-105 transition duration-300"
-                    />
-                  ) : (
-                    <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                      Sin imagen
-                    </div>
-                  )}
-                </div>
-
-                {/* Información del producto */}
-                <div class="p-4 flex flex-col flex-grow bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
-                  <span class="text-xs font-semibold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg w-max mb-2">
-                    {prod.categorias?.nombre || "General"}
-                  </span>
-
-                  <h3 class="font-bold text-gray-800 text-base mb-1 truncate">
-                    {prod.nombre}
-                  </h3>
-                  <p class="text-gray-500 text-xs mb-4 line-clamp-2">
-                    {prod.descripcion}
-                  </p>
-
-                  <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100 mb-3">
-                    <span class="text-lg font-bold text-gray-900">
-                      S/. {prod.precio}
-                    </span>
-                    <span class="text-xs text-gray-400 font-medium">
-                      Stock: {prod.stock}
-                    </span>
-                  </div>
-
-                  <a
-                    href={`/producto/${prod.id}`}
-                    class="w-full text-center bg-amber-600 hover:bg-amber-700 text-white font-medium text-sm py-2.5 px-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow"
-                  >
-                    Ver Producto ✨
-                  </a>
-                </div>
-              </div>
+            categories?.map((cat) => (
+              <button
+                class="pill px-4 py-2 bg-green-900 text-white rounded-xl text-sm font-medium transition hover:bg-blue-700"
+                data-category={cat.id}
+              >
+                {cat.nombre}
+              </button>
             ))
           }
         </div>
-      </main>
-    </body>
-  </html>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      id="productos-grid"
+    >
+      {
+        productos && productos.length > 0 ? (
+          productos.map((prod) => (
+            <div
+              class="producto-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition hover:shadow-lg flex flex-col"
+              data-categoria-id={prod.categoria_id}
+            >
+              {/* Contenedor de la imagen con tamaño controlado (h-48 fija) */}
+              <div class="h-48 w-full bg-gray-100 overflow-hidden">
+                {prod.imagen ? (
+                  <img
+                    src={prod.imagen}
+                    alt={prod.nombre}
+                    class="w-full h-full object-cover hover:scale-105 transition duration-800"
+                  />
+                ) : (
+                  <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                    Sin imagen
+                  </div>
+                )}
+              </div>
+
+              <div class="p-4 flex flex-col flex-grow">
+                <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+                  {prod.categorias?.nombre || "General"}
+                </span>
+                <h3 class="text-lg font-bold text-green-800 mb-1">
+                  {prod.nombre}
+                </h3>
+                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                  {prod.descripcion}
+                </p>
+                <div class="flex items-center justify-between mt-auto">
+                  <span class="text-xl font-extrabold text-gray-900">
+                    S/ {prod.precio}
+                  </span>
+                  <a
+                    href={`/producto/${prod.id}`}
+                    class="px-3 py-1.5 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition"
+                  >
+                    Ver Detalle
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p class="text-gray-500 col-span-full text-center py-10">
+            No hay productos disponibles por el momento.
+          </p>
+        )
+      }
+    </div>
+  </main>
 </MainLayout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const botonesFiltro = document.querySelectorAll(".filtro-btn");
+    const tarjetasProductos = document.querySelectorAll(".producto-card");
+
+    botonesFiltro.forEach((boton) => {
+      boton.addEventListener("click", () => {
+        // Cambiar estilos activos de los botones
+        botonesFiltro.forEach((btn) => {
+          btn.classList.remove("bg-amber-600", "text-white");
+          btn.classList.add("bg-gray-200", "text-gray-700");
+        });
+        boton.classList.remove("bg-gray-200", "text-gray-700");
+        boton.classList.add("bg-amber-600", "text-white");
+
+        const categoriaSeleccionada = boton.getAttribute("data-categoria");
+
+        // Filtrar las tarjetas de productos
+        tarjetasProductos.forEach((tarjeta) => {
+          const categoriaIdProducto = tarjeta.getAttribute("data-categoria-id");
+
+          if (
+            categoriaSeleccionada === "todos" ||
+            categoriaIdProducto === categoriaSeleccionada
+          ) {
+            (tarjeta as HTMLElement).style.display = "flex";
+          } else {
+            (tarjeta as HTMLElement).style.display = "none";
+          }
+        });
+      });
+    });
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("product-search");
+    const clearButton = document.getElementById("clear-search");
+    const noProductsMessage = document.getElementById("no-products-message");
+    const botonesFiltro = document.querySelectorAll("#category-filters button");
+    const tarjetasProductos = document.querySelectorAll(".producto-card");
+
+    let categoriaActual = "todos";
+
+    // Función principal para filtrar tarjetas (por texto y por categoría a la vez)
+    function filtrarProductos() {
+      const textoBusqueda = searchInput.value.toLowerCase().trim();
+      let visiblesCount = 0;
+
+      tarjetasProductos.forEach((tarjeta) => {
+        const categoriaIdProducto = tarjeta.getAttribute("data-categoria-id");
+        const nombreProducto =
+          tarjeta.querySelector("h3")?.textContent.toLowerCase() || "";
+        const descProducto =
+          tarjeta.querySelector("p")?.textContent.toLowerCase() || "";
+
+        // Validar categoría
+        const coincideCategoria =
+          categoriaActual === "todos" ||
+          categoriaIdProducto === categoriaActual;
+
+        // Validar texto del buscador
+        const coincideTexto =
+          nombreProducto.includes(textoBusqueda) ||
+          descProducto.includes(textoBusqueda);
+
+        if (coincideCategoria && coincideTexto) {
+          tarjeta.style.display = "flex";
+          visiblesCount++;
+        } else {
+          tarjeta.style.display = "none";
+        }
+      });
+
+      // Mostrar u ocultar botón de limpiar "X"
+      if (textoBusqueda.length > 0) {
+        clearButton.style.display = "block";
+      } else {
+        clearButton.style.display = "none";
+      }
+
+      // Mostrar mensaje de "no tenemos ese producto" si no hay resultados y hay texto escrito
+      if (visiblesCount === 0 && textoBusqueda.length > 0) {
+        noProductsMessage.style.display = "block";
+      } else {
+        noProductsMessage.style.display = "none";
+      }
+    }
+
+    // Evento al escribir en el buscador
+    searchInput.addEventListener("input", filtrarProductos);
+
+    // Evento al hacer clic en el botón limpiar (✕)
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      filtrarProductos();
+      searchInput.focus();
+    });
+
+    // Evento al hacer clic en los botones de categorías
+    botonesFiltro.forEach((boton) => {
+      boton.addEventListener("click", () => {
+        botonesFiltro.forEach((btn) => {
+          btn.classList.remove("bg-amber-600", "text-white");
+          btn.classList.add("bg-gray-100", "text-gray-700");
+        });
+        boton.classList.remove("bg-gray-100", "text-gray-700");
+        boton.classList.add("bg-amber-600", "text-white");
+
+        categoriaActual = boton.getAttribute("data-category");
+        filtrarProductos();
+      });
+    });
+  });
+</script>
