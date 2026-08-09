@@ -107,7 +107,7 @@ if (errorProductos) {
         productos && productos.length > 0 ? (
           productos.map((prod) => (
             <div
-              class="producto-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition hover:shadow-lg flex flex-col"
+              class="producto-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-500 transition hover:shadow-lg flex flex-col"
               data-categoria-id={prod.categoria_id}
             >
               {/* Contenedor de la imagen con tamaño controlado (h-48 fija) */}
@@ -116,7 +116,7 @@ if (errorProductos) {
                   <img
                     src={prod.imagen}
                     alt={prod.nombre}
-                    class="w-full h-full object-cover hover:scale-105 transition duration-800"
+                    class="w-full h-full object-cover hover:scale-105 transition duration-300"
                   />
                 ) : (
                   <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">
@@ -126,10 +126,10 @@ if (errorProductos) {
               </div>
 
               <div class="p-4 flex flex-col flex-grow">
-                <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
+                <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-1">
                   {prod.categorias?.nombre || "General"}
                 </span>
-                <h3 class="text-lg font-bold text-green-800 mb-1">
+                <h3 class="text-lg font-bold text-black-800 mb-1">
                   {prod.nombre}
                 </h3>
                 <p class="text-gray-600 text-sm mb-4 flex-grow">
