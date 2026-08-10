@@ -72,40 +72,41 @@ if (error) {
     </p>
   </div>
 
-  {/* Tarjetas de Categorías Dinámicas con imagen automática de Supabase */}
-<div class="flex items-center gap-4 overflow-x-auto py-2 px-2 rounded-xl shadow-[0_4px_20px_rgba(34,197,94,0.18)]" >
-    {categorias?.map((categoria) => {
-  const producto = categoria.productos?.[0];
+  <!-- Contenedor principal con flex y centrado automático -->
+<div class="flex flex-wrap justify-center items-center gap-4 py-4 px-4 rounded-xl shadow-[0_4px_20px_rgba(34,197,94,0.18)]">
+  {categorias?.map((categoria) => {
+    const producto = categoria.productos?.[0];
 
-  return (
-    <a
-      href="/catalogo"
-      class="group relative block w-full overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-    >
-      <!-- Imagen con tamaño FIJO -->
-      <div class="h-[280px] w-full overflow-hidden bg-gray-100">
-        <img
-          src={producto?.imagen}
-          alt={producto?.nombre || categoria.nombre}
-          class="h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </div>
+    return (
+      <a
+        key={categoria.id}
+        href="/catalogo"
+        class="group relative block w-full sm:w-[300px] md:w-[320px] overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      >
+        <!-- Imagen con tamaño FIJO -->
+        <div class="h-[280px] w-full overflow-hidden bg-gray-100">
+          <img
+            src={producto?.imagen}
+            alt={producto?.nombre || categoria.nombre}
+            class="h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
 
-      <!-- Información -->
-      <div class="flex h-[72px] items-center justify-between px-5">
-        <h3 class="text-lg font-semibold text-gray-800">
-          {categoria.nombre}
-        </h3>
+        <!-- Información -->
+        <div class="flex h-[72px] items-center justify-between px-5">
+          <h3 class="text-lg font-semibold text-gray-800">
+            {categoria.nombre}
+          </h3>
 
-        <!-- Cuadro de flecha -->
-        <span
-          class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-700 transition-all duration-300 group-hover:bg-gray-900 group-hover:text-white"
-        >
-          →
-        </span>
-      </div>
-    </a>
-  );
-})}
-  </>
+          <!-- Cuadro de flecha -->
+          <span
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-700 transition-all duration-300 group-hover:bg-gray-900 group-hover:text-white"
+          >
+            →
+          </span>
+        </div>
+      </a>
+    );
+  })}
+</div>
 </section>

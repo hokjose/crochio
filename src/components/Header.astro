@@ -29,8 +29,11 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
     </a>
 
     {/* Botones de Navegación (Inicio y Contactar) */}
-    <nav class="flex items-center gap-3 md:gap-6">
-      <div class="flex items-center gap-6">
+    <nav
+      class="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 py-3 px-4 w-full"
+    >
+      <!-- Enlaces de navegación -->
+      <div class="flex items-center justify-center gap-6">
         <a
           href="/"
           class="text-sm font-medium text-gray-600 hover:text-rose-600 transition"
@@ -48,9 +51,10 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
         </a>
       </div>
 
+      <!-- Botón de catálogo -->
       <a
         href="/catalogo"
-        class="bg-rose-600 hover:bg-rose-700 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow-md shadow-rose-200 transition"
+        class="bg-rose-600 hover:bg-rose-700 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow-md shadow-rose-200 transition text-center"
       >
         Ver Catálogo
       </a>
