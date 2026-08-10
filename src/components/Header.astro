@@ -12,7 +12,7 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
   class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm"
 >
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    {/* Logo y Nombre en el Header */}
+    {/* Logo y Nombre principal en el Header */}
     <a href="/" class="flex items-center gap-3 group">
       <div
         class="w-10 h-10 rounded-full overflow-hidden border-2 border-rose-500 shadow-md bg-white flex items-center justify-center"
@@ -28,33 +28,27 @@ const whatsappFooterUrl = `https://wa.me/${numeroCelular}?text=${encodeURICompon
       </span>
     </a>
 
-    {/* Botones de Navegación (Inicio y Contactar) */}
-    <nav
-      class="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 py-3 px-4 w-full"
-    >
-      <!-- Enlaces de navegación -->
-      <div class="flex items-center justify-center gap-6">
-        <a
-          href="/"
-          class="text-sm font-medium text-gray-600 hover:text-rose-600 transition"
-        >
-          Inicio
-        </a>
+    {/* Navegación limpia sin duplicar el logo */}
+    <nav class="flex items-center gap-3 md:gap-6">
+      <a
+        href="/"
+        class="text-xs md:text-sm font-medium text-gray-600 hover:text-rose-600 transition"
+      >
+        Inicio
+      </a>
 
-        <a
-          href={whatsappFooterUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-sm font-medium text-gray-600 hover:text-rose-600 transition"
-        >
-          Contactar
-        </a>
-      </div>
+      <a
+        href={whatsappFooterUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs md:text-sm font-medium text-gray-600 hover:text-rose-600 transition"
+      >
+        Contactar
+      </a>
 
-      <!-- Botón de catálogo -->
       <a
         href="/catalogo"
-        class="bg-rose-600 hover:bg-rose-700 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-xl shadow-md shadow-rose-200 transition text-center"
+        class="bg-rose-600 hover:bg-rose-700 text-white text-xs md:text-sm font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-md shadow-rose-200 transition whitespace-nowrap"
       >
         Ver Catálogo
       </a>
