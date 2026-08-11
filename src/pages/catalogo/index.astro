@@ -32,7 +32,9 @@ if (errorProductos) {
 ---
 
 <MainLayout>
-  <main class="max-w-7xl mx-auto px-4 py-8">
+  <main
+    class="max-w-7xl mx-auto px-4 py-8 bg-gradient-to-b from-sky-100/50 to-white"
+  >
     <div
       class="catalogo-header-container bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8"
     >
@@ -132,9 +134,9 @@ if (errorProductos) {
                 <h3 class="text-lg font-bold text-black-800 mb-1">
                   {prod.nombre}
                 </h3>
-                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                {/*}<p class="text-gray-600 text-sm mb-4 flex-grow">
                   {prod.descripcion}
-                </p>
+                </p> */}
                 <div class="flex items-center justify-between mt-auto">
                   <span class="text-xl font-extrabold text-gray-900">
                     S/ {prod.precio}
