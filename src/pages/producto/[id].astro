@@ -71,7 +71,119 @@ const whatsappUrl = `https://wa.me/${numeroCelular}?text=${encodeURIComponent(me
             </ul>
           </div>
         </div>
+        <button
+          onclick="document.getElementById('modalPago').classList.remove('hidden')"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+        >
+          Comprar
+        </button>
 
+        <!-- MODAL -->
+        <div
+          id="modalPago"
+          class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+        >
+          <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">
+              🛒 Realizar compra
+            </h2>
+
+            <!-- INFORMACIÓN DE PAGO -->
+            <div class="border rounded-xl p-4 mb-4">
+              <h3 class="font-bold text-lg mb-2">📱 Yape</h3>
+
+              <p class="text-gray-700">
+                Número: a nombre de (tu nombre de yape)
+              </p>
+
+              <p class="text-xl font-bold mb-4">974 357 754</p>
+
+              <h3 class="font-bold text-lg mb-2">
+                🏦 Depósito / Transferencia
+              </h3>
+
+              <p class="text-gray-700">
+                Número de cuenta:a nombre de (tu nombre)
+              </p>
+
+              <p class="text-xl font-bold break-all">4557881305366272</p>
+            </div>
+
+            <!-- DATOS DEL CLIENTE -->
+            <div class="space-y-3">
+              <div>
+                <label class="block text-sm font-medium mb-1"> Nombre </label>
+
+                <input
+                  id="nombreCliente"
+                  type="text"
+                  placeholder="Tu nombre"
+                  class="w-full border rounded-lg px-3 py-2"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1"> Celular </label>
+
+                <input
+                  id="celularCliente"
+                  type="tel"
+                  placeholder="Tu número"
+                  class="w-full border rounded-lg px-3 py-2"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-1">
+                  Método de pago
+                </label>
+
+                <select
+                  id="metodoPago"
+                  class="w-full border rounded-lg px-3 py-2"
+                >
+                  <option value="yape">Yape</option>
+                  <option value="deposito">Depósito / Transferencia</option>
+                </select>
+              </div>
+
+              <!-- COMPROBANTE -->
+              <div>
+                <label class="block text-sm font-medium mb-1">
+                  Comprobante de pago
+                </label>
+
+                <input
+                  id="comprobante"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  class="w-full border rounded-lg px-3 py-2"
+                />
+
+                <p class="text-xs text-gray-500 mt-1">
+                  Sube una imagen de tu comprobante.
+                </p>
+              </div>
+            </div>
+
+            <!-- BOTÓN -->
+            <button
+              id="confirmarCompra"
+              class="w-full bg-green-600 text-white py-3 rounded-lg mt-5 hover:bg-green-700"
+            >
+              Confirmar compra
+            </button>
+
+            <button
+              onclick="document.getElementById('modalPago').classList.add('hidden')"
+              class="w-full bg-gray-800 text-white py-2 rounded-lg mt-2"
+            >
+              Cancelar
+            </button>
+
+            <p id="mensajeCompra" class="text-center text-sm mt-3"></p>
+          </div>
+        </div>
         <div class="space-y-3 pt-4 border-t border-gray-100">
           <a
             href={whatsappUrl}
@@ -95,3 +207,96 @@ const whatsappUrl = `https://wa.me/${numeroCelular}?text=${encodeURIComponent(me
     </div>
   </main>
 </MainLayout>
+<script>
+  import { supabase } from "../../lib/supabase";
+
+  const boton = document.getElementById("confirmarCompra");
+
+  boton?.addEventListener("click", async () => {
+    // resto de tu código...
+    const nombre = (
+      document.getElementById("nombreCliente") as HTMLInputElement
+    ).value;
+
+    const celular = (
+      document.getElementById("celularCliente") as HTMLInputElement
+    ).value;
+
+    const metodo = (document.getElementById("metodoPago") as HTMLSelectElement)
+      .value;
+
+    const archivo = (document.getElementById("comprobante") as HTMLInputElement)
+      .files?.[0];
+
+    const mensaje = document.getElementById("mensajeCompra");
+
+    if (!nombre || !celular || !archivo) {
+      mensaje!.textContent = "⚠️ Completa tus datos y sube el comprobante.";
+
+      return;
+    }
+
+    try {
+      mensaje!.textContent = "⏳ Subiendo comprobante...";
+
+      // ==========================================
+      // VARIABLE DE REFERENCIA DE SUPABASE
+      // ==========================================
+
+      const supabaseClient = supabase;
+
+      // ==========================================
+      // CREAR NOMBRE ÚNICO PARA LA IMAGEN
+      // ==========================================
+
+      const extension = archivo.name.split(".").pop();
+
+      const nombreArchivo = `comprobantes/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+
+      // ==========================================
+      // SUBIR IMAGEN A SUPABASE STORAGE
+      // ==========================================
+
+      const { error: uploadError } = await supabaseClient.storage
+        .from("comprobantes")
+        .upload(nombreArchivo, archivo, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: archivo.type,
+        });
+
+      if (uploadError) {
+        console.error("ERROR COMPLETO DE SUPABASE:", uploadError);
+
+        mensaje!.textContent = `❌ Error: ${uploadError.message}`;
+
+        return;
+      }
+
+      // ==========================================
+      // OBTENER URL DE LA IMAGEN
+      // ==========================================
+
+      const { data } = supabaseClient.storage
+        .from("comprobantes")
+        .getPublicUrl(nombreArchivo);
+
+      const urlComprobante = data.publicUrl;
+
+      console.log("URL DEL COMPROBANTE:", urlComprobante);
+
+      mensaje!.textContent = "✅ Comprobante subido correctamente.";
+
+      console.log({
+        nombre,
+        celular,
+        metodo,
+        comprobante: urlComprobante,
+      });
+    } catch (error) {
+      console.error(error);
+
+      mensaje!.textContent = "❌ Ocurrió un error.";
+    }
+  });
+</script>
